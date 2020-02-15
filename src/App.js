@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, useRef, useEffect } from 'react';
+import { Canvas, Dom, useFrame } from 'react-three-fiber';
+import state from './store';
+import './styles.css';
+import Pages from './components/pages';
+import lerp from 'lerp';
+
+function Startup() {
+  const ref = useRef();
+  useFrame(() => (ref.current.material.opacity = lerp(ref.current.material.opacity, 0, 0.025)));
+  return (
+    <mesh ref={ref} position={[0, 0, 200]} scale={[100, 100, 1]}>
+      <planeBufferGeometry attach="geometry" />
+      <meshBasicMaterial attach="material" color="#dfdfdf" transparent />
+    </mesh>
+  );
+}
 
 function App() {
+  const scrollArea = useRef();
+  const onScroll = (e) => (state.top.current = e.target.scrollTop);
+  useEffect(() => void onScroll({ target: scrollArea.current }), []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Canvas className="canvas" orthographic camera={{ zoom: state.zoom, position: [0, 0, 500] }}>
+        <Suspense fallback={<Dom center className="loading" children="Loading..." />}>
+          <Pages />
+          <Startup />
+        </Suspense>
+      </Canvas>
+      <div className="scrollArea" ref={scrollArea} onScroll={onScroll}>
+        <div style={{ height: `${state.pages * 100}vh` }} />
+      </div>
+    </>
   );
 }
 
