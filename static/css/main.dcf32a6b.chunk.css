@@ -1,0 +1,2 @@
+@import url(https://fonts.googleapis.com/css?family=News+Cycle&display=swap);:root{font-size:20px}body,html{margin:0;padding:0;background:#333;color:#ddd;overflow:hidden;font-family:"News Cycle",sans-serif}#root{width:100vw;height:100vh;overflow:hidden}canvas{position:absolute}.loading{padding:10px;-webkit-transform:translate3d(-50%,-50%,0);transform:translate3d(-50%,-50%,0)}.scrollArea{position:absolute;top:0;left:0;width:100vw;height:100vh;overflow:auto}
+/*# sourceMappingURL=main.dcf32a6b.chunk.css.map */
