@@ -25,6 +25,8 @@ function Stripe() {
 
 export default function Pages() {
   const textures = useLoader(TextureLoader, state.images);
+  console.log({ textures });
+
   const [img1, img2, img3] = textures.map((texture) => {
     texture.minFilter = LinearFilter;
     return texture;
